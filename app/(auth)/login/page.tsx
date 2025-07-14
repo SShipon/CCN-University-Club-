@@ -1,24 +1,15 @@
 "use client";
 
 import { loginUser } from "@/actions/auth/login.action";
-import { useFormState } from "react-dom";
-export default function LoginPage() {
-  const [state, formAction] = useFormState(loginUser, null);
 
+export default function LoginPage() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200">
       <form
-        action={formAction}
+        action={loginUser}
         className="w-full max-w-md space-y-6 bg-white p-8 rounded-xl shadow-xl border"
       >
         <h1 className="text-3xl font-bold text-center text-indigo-700">Login to Your Account</h1>
-
-        {state?.error && (
-          <p className="text-center text-red-600 font-semibold">{state.error}</p>
-        )}
-        {state?.success && (
-          <p className="text-center text-green-600 font-semibold">{state.success}</p>
-        )}
 
         <div className="flex flex-col space-y-2">
           <label htmlFor="email" className="text-gray-700 font-medium">Email Address</label>

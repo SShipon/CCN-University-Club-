@@ -6,27 +6,27 @@ import bcrypt from "bcrypt";
 import { setLoginSession } from "@/utils/auth";
 import { redirect } from "next/navigation";
 
-export async function loginUser(_: any, formData: FormData) {
+export async function loginUser(formData: FormData) {
   await connectDB();
 
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
   if (!email || !password) {
-    return { error: "Email and Password are required!" };
+    throw new Error("Email and Password are required!");
   }
 
   const user = await User.findOne({ email });
   if (!user) {
-    return { error: "User not found!" };
+    throw new Error("User not found!");
   }
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    return { error: "Invalid password!" };
+    throw new Error("Invalid password!");
   }
 
   await setLoginSession(user._id.toString());
 
-  return { success: "Login successful!" };
+  redirect("/dashboard");
 }
