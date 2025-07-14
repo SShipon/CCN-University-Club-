@@ -1,7 +1,14 @@
-export default function Home() {
+
+"use server";
+
+import { connectDB } from "@/lib/mongoose";
+
+export default async function Home() {
+  await connectDB();
+
   return (
-    <div className="text-center mt-10 text-3xl text-blue-600">
-      University Club Website Running! 🎉
-    </div>
+    <main className="flex justify-center items-center min-h-screen text-3xl text-green-700">
+      🎉 MongoDB Connected & University Club Ready!
+    </main>
   );
 }
